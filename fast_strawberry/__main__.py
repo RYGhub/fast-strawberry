@@ -5,6 +5,11 @@ import time
 
 @click.command()
 @click.option(
+    "-s", "--server", "server",
+    required=True,
+    help="The server where impressive-strawberry is hosted on, with no trailing slash."
+)
+@click.option(
     "-t", "--application-token", "application_token",
     required=True,
     help="The token of the application to authenticate as."
@@ -23,7 +28,7 @@ import time
     "users",
     nargs=-1,
 )
-def mass_award(application_token: str, group: str, achievement: str, users: list[str]):
+def mass_award(server: str, application_token: str, group: str, achievement: str, users: list[str]):
     click.secho("Unlocking achievement for ", nl=False, fg="blue")
     click.secho(f"{len(users)}", nl=False, fg="brightblue")
     click.secho("...", nl=True, fg="blue")
@@ -31,7 +36,7 @@ def mass_award(application_token: str, group: str, achievement: str, users: list
         "Authorization": f"Bearer {application_token}",
     }) as h:
         for user in users:
-            unlock = h.post("/api/unlock/v1/", params={
+            unlock = h.post(f"{server}/api/unlock/v1/", params={
                 "achievement": achievement,
                 "group": group,
                 "user": user,
