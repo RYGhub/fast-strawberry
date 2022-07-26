@@ -30,7 +30,7 @@ import time
 )
 def mass_award(server: str, application_token: str, group: str, achievement: str, users: list[str]):
     click.secho("Unlocking achievement for ", nl=False, fg="blue")
-    click.secho(f"{len(users)}", nl=False, fg="brightblue")
+    click.secho(f"{len(users)}", nl=False, fg="bright_blue")
     click.secho("...", nl=True, fg="blue")
     with httpx.Client(headers={
         "Authorization": f"Bearer {application_token}",
@@ -43,11 +43,11 @@ def mass_award(server: str, application_token: str, group: str, achievement: str
             })
             if unlock.status_code == 201:
                 click.secho("Unlock successful for ", nl=False, fg="green")
-                click.secho(f"{user}", nl=False, fg="brightgreen")
+                click.secho(f"{user}", nl=False, fg="bright_green")
                 click.secho("!", nl=True, fg="green")
             else:
                 click.secho("Unlock failed for", nl=False, fg="red")
-                click.secho(f"{user}", nl=False, fg="brightred")
+                click.secho(f"{user}", nl=False, fg="bright_red")
                 click.secho("!", nl=True, fg="red")
             time.sleep(0.5)
 
